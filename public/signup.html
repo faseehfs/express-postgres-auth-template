@@ -58,6 +58,10 @@
         }).then((response) => {
           if (response.ok) {
             window.location = "/login.html";
+          } else {
+            response.json().then((data) => {
+              alert(data.error);
+            });
           }
         });
       });
