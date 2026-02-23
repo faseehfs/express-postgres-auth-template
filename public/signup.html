@@ -27,15 +27,21 @@
       signupForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        let signupData;
         const formData = new FormData(signupForm);
-        signupData = {
-          username: formData.get("username"),
-          email: formData.get("email"),
-          password: formData.get("password"),
-        };
 
-        console.log(signupData);
+        fetch("/api/new-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: formData.get("username"),
+            email: formData.get("email"),
+            password: formData.get("password"),
+          }),
+        }).then((response) => {
+          if (response.ok) {
+            window.location = "/login.html";
+          }
+        });
       });
     </script>
   </body>
