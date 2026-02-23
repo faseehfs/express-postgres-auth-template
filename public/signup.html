@@ -16,7 +16,9 @@
       <input type="text" id="email" name="email" /><br />
 
       <label for="password">Password:</label><br />
-      <input type="text" id="password" name="password" /><br /><br />
+      <input type="text" id="password" name="password" /><br />
+
+      <p id="errorP" style="color: red; display: none"></p>
 
       <button id="signupFormSubmitButton" class="button" type="submit" disabled>
         Submit
@@ -60,7 +62,9 @@
             window.location = "/login.html";
           } else {
             response.json().then((data) => {
-              alert(data.error);
+              let errorP = document.getElementById("errorP");
+              errorP.style.display = "block";
+              errorP.textContent = data.error;
             });
           }
         });
