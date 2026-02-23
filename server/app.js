@@ -30,6 +30,9 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api", require("./routes"));
 
 // This mounts the router (from ./routes/index.js) on the app.
+// index.js is loaded by default, so we don't need to give the full path.
+// Also, index.js exports the router, so it is automatically imported without
+// specifying.
 
 // See https://expressjs.com/en/guide/using-middleware.html to learn more about
 // middleware functions.
