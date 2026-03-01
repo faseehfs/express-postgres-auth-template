@@ -5,11 +5,12 @@
 :root {
   --background: #fff;
   --panel-background: #dcdcdc;
-  --text: #000;
-  --primary: #ffe760;
-  --primary-dark: #f7dd48;
-  --primary-darker: #f7dd48;
+  --text: #020202;
+  --primary: #105a80;
+  --primary-dark: #0f5274;
+  --primary-darker: #0c4460;
   --primary-disabled: #e5e5e5;
+  --primary-text: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,10 +18,11 @@
     --background: #242424;
     --panel-background: #383838;
     --text: #e4e4e4;
-    --primary: #4d482d;
-    --primary-dark: #3e3a21;
-    --primary-darker: #353220;
-    --primary-disabled: #515151;
+    --primary: #78c2dc;
+    --primary-dark: #66abc4;
+    --primary-darker: #5c9cb3;
+    --primary-disabled: #909090;
+    --primary-text: #030303;
   }
 }
 
@@ -35,13 +37,13 @@ body {
 }
 
 .button {
-  color: var(--text);
+  color: var(--primary-text);
   background-color: var(--primary);
   border: None;
   border-radius: 0.2rem;
   padding: 0.5rem 1.2rem 0.5rem 1.2rem;
   transition: background-color 0.2s ease;
-  border: 1px solid var(--text);
+  border: none;
   font-size: 1rem;
   cursor: pointer;
   user-select: none;
@@ -57,7 +59,7 @@ body {
 }
 
 .button:disabled {
-  background-color: var(--primary-diabled);
+  background-color: var(--primary-disabled);
   cursor: default;
 }
 
