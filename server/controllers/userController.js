@@ -24,4 +24,13 @@ async function createNewUser(req, res, next) {
   }
 }
 
-module.exports = { getAllUsers, createNewUser };
+async function getPasswordHash(req, res, next) {
+  try {
+    const password_hash = await userModel.getPasswordHash(req.session.username);
+    res.json({ password_hash: password_hash });
+  } catch {
+    res.json({ error: "Failed to get password hash." });
+  }
+}
+
+module.exports = { getAllUsers, createNewUser, getPasswordHash };
