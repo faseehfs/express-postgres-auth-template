@@ -7,6 +7,7 @@ To host the website, run this file.
 
 const express = require("express");
 const path = require("path");
+const session = require("express-session");
 
 // You can import modules either by require (CommonJS) or import (ES6).
 // ES6 modules are the modern approach. However, here we use CommonJS.
@@ -15,8 +16,6 @@ const path = require("path");
 
 const app = express();
 const PORT = 3000;
-
-// By convension, constants are named using the SCREAMING_SNAKE_CASE.
 
 // Middleware:
 
