@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 // The above middleware functions has no mount path, meaning they will execute
 // every time the app recieves a request.
 // However, the below middleware has a mount path.
+// Middleware functions are executed in the order in which they are defined.
 
 app.use("/api", require("./routes"));
 
