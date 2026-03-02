@@ -1,13 +1,9 @@
 const router = require("express").Router();
-const connection = require("../db");
+const connection = require("../config/db");
 const bcrypt = require("bcrypt");
+const userController = require("../controllers/userController");
 
-router.get("/all", (req, res) => {
-  connection.query("SELECT username FROM users", (err, rows, fields) => {
-    const usernames = rows.map((row) => row.username);
-    res.json({ usernames: usernames });
-  });
-});
+router.get("/all", userController.getAllUsers);
 
 router.post("/new", (req, res) => {
   bcrypt.hash(req.body.password, 10, (err, password_hash) => {
