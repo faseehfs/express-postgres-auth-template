@@ -34,6 +34,6 @@ module.exports = connection;
 // Here, we are exporting the "connection" object, which can be imported from
 // other modules by "const connection = require('path-to-this-file')".
 
-// If we export multiple stuff, they will come as an "object".
+// If we export multiple stuff, they will appear as a JavaScript object.
 // We need to unpack them, like this:
 // const { add, sub } = require('./math');
