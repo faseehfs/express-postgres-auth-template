@@ -28,6 +28,9 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
 
+// express.static(path) serves static files in the path.
+// If a matching file is found, it ends the request-response cycle.
+
 // The above middleware functions has no mount path, meaning they will execute
 // every time the app recieves a request.
 // However, the below middleware has a mount path.
