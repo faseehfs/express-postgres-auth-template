@@ -58,6 +58,11 @@ async function login(req, res, next) {
   }
 }
 
+async function logout(req, res, next) {
+  req.session.destroy();
+  res.redirect("/");
+}
+
 async function isLoggedIn(req, res, next) {
   if (req.session.username) {
     res.json({ isLoggedIn: true });
@@ -72,4 +77,5 @@ module.exports = {
   getUserDetails,
   login,
   isLoggedIn,
+  logout,
 };

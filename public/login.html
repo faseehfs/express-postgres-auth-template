@@ -42,7 +42,6 @@
             const data = await res.json();
 
             if (res.ok) {
-              alert("Login successful!");
               window.location.href = "/home.html";
             } else {
               alert("Error: " + data.error);
