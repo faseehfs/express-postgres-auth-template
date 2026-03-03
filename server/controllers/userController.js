@@ -24,19 +24,21 @@ async function createNewUser(req, res, next) {
   }
 }
 
-async function getPasswordHash(req, res, next) {
+async function getUserDetails(req, res, next) {
   try {
-    const password_hash = await userModel.getPasswordHash(req.session.username);
-    res.json({ password_hash: password_hash });
+    const user_details = await userModel.getUserDetails(req.session.username);
+    res.json({ user_details: user_details });
   } catch {
-    res.json({ error: "Failed to get password hash." });
+    res.json({ error: "Failed to get user details." });
   }
 }
 
 async function login(req, res, next) {
   try {
     const { username, password } = req.body;
-    const storedHash = await userModel.getPasswordHash(username);
+    const userDetails = await userModel.getUserDetails(username);
+    const storedHash = userDetails.password_hash;
+    console.log(storedHash);
 
     if (!storedHash) {
       return res.status(400).json({ error: "Invalid username or password" });
@@ -55,4 +57,9 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = { getAllUsers, createNewUser, getPasswordHash, login };
+module.exports = {
+  getAllUsers,
+  createNewUser,
+  getUserDetails,
+  login,
+};

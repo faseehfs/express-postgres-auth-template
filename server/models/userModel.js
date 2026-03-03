@@ -2,7 +2,7 @@ const connection = require("../config/db");
 
 async function getAllUsers(callback) {
   return new Promise((resolve, reject) => {
-    connection.query("SELECT * FROM users", (err, results) => {
+    connection.query("SELECT username FROM users", (err, results) => {
       if (err) return reject(err);
       resolve(results);
     });
@@ -22,17 +22,17 @@ async function createNewUser(username, email, password_hash, callback) {
   });
 }
 
-async function getPasswordHash(username) {
+async function getUserDetails(username) {
   return new Promise((resolve, reject) => {
     connection.query(
-      "SELECT password_hash FROM users WHERE username = ?",
+      "SELECT * FROM users WHERE username = ?",
       [username],
       (err, result) => {
         if (err) return reject(err);
-        resolve(result[0].password_hash);
+        resolve(result[0]);
       },
     );
   });
 }
 
-module.exports = { getAllUsers, createNewUser, getPasswordHash };
+module.exports = { getAllUsers, createNewUser, getUserDetails };

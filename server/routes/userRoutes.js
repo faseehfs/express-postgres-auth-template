@@ -3,7 +3,7 @@ const userController = require("../controllers/userController");
 const restrict = require("../middleware/restrict");
 
 router.get("/all", userController.getAllUsers);
-router.get("/password", restrict, userController.getPasswordHash);
+router.get("/details", restrict, userController.getUserDetails);
 router.post("/new", userController.createNewUser);
 router.post("/login", userController.login);
 
