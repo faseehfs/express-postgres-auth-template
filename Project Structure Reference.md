@@ -1,5 +1,7 @@
 # Project Structure Reference
 
+## Option 1: layered architecture (small to medium apps)
+
 ```
 project-root/
 ├── backend/
@@ -47,4 +49,46 @@ project-root/
 ├── .gitignore
 ├── README.md
 └── package.json               # Optional root package.json for monorepo scripts
+```
+
+## Option 2: feature-first approach (large apps)
+
+```
+project-root/
+├── backend/
+│   ├── src/
+│   │   ├── config/           # Environment and database configs
+│   │   ├── modules/          # Feature-based modules
+│   │   │   ├── auth/
+│   │   │   │   ├── auth.controller.js
+│   │   │   │   ├── auth.service.js
+│   │   │   │   ├── auth.routes.js
+│   │   │   │   └── auth.model.js
+│   │   │   ├── users/
+│   │   │   │   ├── users.controller.js
+│   │   │   │   ├── users.service.js
+│   │   │   │   ├── users.routes.js
+│   │   │   │   └── users.model.js
+│   │   │   └── products/
+│   │   │       └── ...      # Same pattern
+│   │   ├── middlewares/
+│   │   ├── utils/
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── package.json
+│   └── .env
+│
+├── frontend/
+│   ├── src/
+│   │   ├── modules/          # Mirror backend feature modules
+│   │   │   ├── auth/
+│   │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   └── api.js
+│   │   │   ├── users/
+│   │   │   └── products/
+│   │   ├── common/           # Shared components/utilities
+│   │   └── App.js
+│   └── package.json
+└── README.md
 ```
