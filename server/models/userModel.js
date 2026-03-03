@@ -1,38 +1,35 @@
-const connection = require("../config/db");
+const pool = require("../config/db");
 
-async function getAllUsers(callback) {
-  return new Promise((resolve, reject) => {
-    connection.query("SELECT username FROM users", (err, results) => {
-      if (err) return reject(err);
-      resolve(results);
-    });
-  });
+async function getAllUsers() {
+  try {
+    const result = await pool.query("SELECT username FROM users");
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
 }
 
-async function createNewUser(username, email, password_hash, callback) {
-  return new Promise((resolve, reject) => {
-    connection.query(
-      "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
+async function createNewUser(username, email, password_hash) {
+  try {
+    const result = await pool.query(
+      "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
       [username, email, password_hash],
-      (err, result) => {
-        if (err) return reject(err);
-        resolve(result);
-      },
     );
-  });
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function getUserDetails(username) {
-  return new Promise((resolve, reject) => {
-    connection.query(
-      "SELECT * FROM users WHERE username = ?",
-      [username],
-      (err, result) => {
-        if (err) return reject(err);
-        resolve(result[0]);
-      },
-    );
-  });
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+      username,
+    ]);
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
 }
 
 module.exports = { getAllUsers, createNewUser, getUserDetails };
