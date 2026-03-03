@@ -3,6 +3,8 @@ This is the entry point of our application.
 To host the website, run this file.
 */
 
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
