@@ -29,8 +29,10 @@
         name="password"
         autocomplete="new-password"
         placeholder="Password"
-      /><br /><br />
-      <p id="errorP" class="danger-color" style="display: none"></p>
+      /><br />
+      <p id="errorP" class="danger-color" style="margin: 0.3rem 0 0.3rem 0">
+        &nbsp;
+      </p>
       <button id="signupFormSubmitButton" class="button" type="submit" disabled>
         Submit
       </button>
@@ -83,8 +85,10 @@
           const data = await response.json();
 
           const errorP = document.getElementById("errorP");
-          errorP.style.display = "block";
           errorP.innerHTML = `Failed to create new account. Try using an alternate email or password.`;
+          setTimeout(() => {
+            errorP.innerHTML = "&nbsp;";
+          }, 5000);
         }
       });
     </script>
