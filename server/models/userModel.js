@@ -10,15 +10,15 @@ async function getAllUsers() {
 }
 
 async function createNewUser(username, email, password_hash) {
-  try {
-    const result = await pool.query(
-      "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
-      [username, email, password_hash],
-    );
-    return result.rows[0];
-  } catch (err) {
-    throw err;
-  }
+  const result = await pool.query(
+    "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
+    [username, email, password_hash],
+  );
+  // If the query cannot be executed successfully, pool.query(...) throws an
+  // error (rejects the Promise) rather than returning a result.
+  // This error can be caught inside the controller.
+
+  return result.rows[0];
 }
 
 async function getUserDetails(username) {
