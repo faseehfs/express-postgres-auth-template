@@ -1,7 +1,11 @@
+require("dotenv").config();
+
 const pool = require("../config/db");
 
-const schema = `
-CREATE TABLE IF NOT EXISTS users (
+const dropTable = `DROP TABLE IF EXISTS users;`;
+
+const createTable = `
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(50) NOT NULL UNIQUE,
   email VARCHAR(100) NOT NULL UNIQUE,
@@ -12,8 +16,11 @@ CREATE TABLE IF NOT EXISTS users (
 
 async function init() {
   try {
-    await pool.query(schema);
-    console.log("Users table ready.");
+    await pool.query(dropTable);
+    console.log("Users table dropped (if it existed).");
+
+    await pool.query(createTable);
+    console.log("Users table created.");
   } catch (err) {
     console.log("Database setup failed:", err);
   } finally {
