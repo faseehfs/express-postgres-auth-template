@@ -29,6 +29,15 @@ async function getUserDetails(username) {
   return result.rows[0] ?? null;
 }
 
+async function getUsernameFromEmail(email) {
+  const result = await pool.query(
+    "SELECT username FROM users WHERE email = $1",
+    [email],
+  );
+
+  return result.rows[0]?.username ?? null;
+}
+
 async function deleteUser(username) {
   const result = await pool.query("DELETE FROM users WHERE username = $1", [
     username,
@@ -37,4 +46,10 @@ async function deleteUser(username) {
   return result.rowCount;
 }
 
-module.exports = { getAllUsers, createNewUser, getUserDetails, deleteUser };
+module.exports = {
+  getAllUsers,
+  createNewUser,
+  getUserDetails,
+  deleteUser,
+  getUsernameFromEmail,
+};

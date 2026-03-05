@@ -7,16 +7,18 @@ async function getAllUsers(req, res, next) {
 }
 
 async function createNewUser(req, res, next) {
-  try {
-    const hash = await bcrypt.hash(req.body.password, 10);
-    await userModel.createNewUser(req.body.username, req.body.email, hash);
-    req.session.username = req.body.username;
-    res.json({ message: "User created" });
-  } catch (err) {
-    res
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res
       .status(400)
-      .json({ error: "An error occured while creating new user." });
+      .json({ error: "Username, email, and password are required." });
   }
+
+  const password_hash = await bcrypt.hash(password, 10);
+  await userModel.createNewUser(username, email, password_hash);
+  req.session.username = req.body.username;
+  res.json({ message: "User created" });
 }
 
 async function getUserDetails(req, res, next) {
