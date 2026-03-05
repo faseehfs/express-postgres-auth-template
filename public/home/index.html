@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Express - Home</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <script>
+      async function redirectIfNotLoggedIn() {
+        const response = await fetch("/api/user/is-logged-in");
+        const data = await response.json();
+        if (!data.isLoggedIn) {
+          alert("You are not logged in.");
+          window.location.href = "/login";
+        }
+      }
+
+      redirectIfNotLoggedIn();
+    </script>
   </head>
   <body>
     <h1>Home</h1>
