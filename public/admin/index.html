@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
     <h1>Admin Panel</h1>
@@ -29,7 +29,7 @@
         const formData = new FormData(deleteUserForm);
         const username = formData.get("username");
 
-        const response = await fetch("api/user/delete", {
+        const response = await fetch("/api/user/delete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username: username }),
