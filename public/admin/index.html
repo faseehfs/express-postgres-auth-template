@@ -9,8 +9,12 @@
   <body>
     <h1>Admin Panel</h1>
     <p>Hey, you you have the permission to be here?</p>
+
+    <h2>See all users</h2>
+    <a class="button" href="/api/user/all">See All Users</a>
+
     <form id="deleteUserForm">
-      <h2>Delete User</h2>
+      <h2>Delete user</h2>
       <label for="username">Username:</label>
       <input name="username" />
       <p id="deleteUserStatus"></p>
@@ -38,7 +42,7 @@
         if (response.ok) {
           deleteUserStatus.textContent = `${username} was successfully deleted.`;
         } else {
-          deleteUserStatus.textContent = `The user ${username} does not exist.`;
+          deleteUserStatus.textContent = `The user '${username}' does not exist.`;
         }
       });
     </script>
