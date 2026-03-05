@@ -16,16 +16,17 @@ async function createNewUser(req, res, next) {
   }
 
   const password_hash = await bcrypt.hash(password, 10);
-  await userModel.createNewUser(username, email, password_hash);
-  req.session.username = req.body.username;
+  const user = await userModel.createNewUser(username, email, password_hash);
+  req.session.userId = user.id;
   res.json({ message: "User created" });
 }
 
 async function getUserDetails(req, res, next) {
   try {
-    const user_details = await userModel.getUserDetails(req.session.username);
-    res.json({ user_details: user_details });
-  } catch {
+    const userDetails = await userModel.getUserDetails(req.session.userId);
+    res.json({ user_details: userDetails });
+  } catch (err) {
+    console.log(err);
     res.json({ error: "Failed to get user details." });
   }
 }
@@ -33,9 +34,9 @@ async function getUserDetails(req, res, next) {
 async function login(req, res, next) {
   const { username, password } = req.body;
 
-  const userDetails = await userModel.getUserDetails(username);
+  const userDetails = await userModel.getUserDetailsFromUsername(username);
 
-  if (userDetails == null) {
+  if (userDetails === null) {
     return res.status(400).json({ error: "Username is invalid." });
   }
 
@@ -46,7 +47,7 @@ async function login(req, res, next) {
     return res.status(400).json({ error: "Password is incorrect." });
   }
 
-  req.session.username = username;
+  req.session.userId = userDetails.id;
   res.json({ message: "Success." });
 }
 
@@ -56,7 +57,7 @@ async function logout(req, res, next) {
 }
 
 async function isLoggedIn(req, res, next) {
-  if (req.session.username) {
+  if (req.session.userId) {
     res.json({ isLoggedIn: true });
   } else {
     res.json({ isLoggedIn: false });
@@ -73,7 +74,13 @@ async function deleteUser(req, res, next) {
   return res.json({ message: "Success." });
 }
 
+async function deleteAllUsers(req, res, next) {
+  userModel.deleteAllUsers();
+  res.json({ message: "Ok" });
+}
+
 module.exports = {
+  deleteAllUsers,
   getAllUsers,
   createNewUser,
   getUserDetails,

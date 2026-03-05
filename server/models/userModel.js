@@ -21,7 +21,15 @@ async function createNewUser(username, email, password_hash) {
   return result.rows[0];
 }
 
-async function getUserDetails(username) {
+async function getUserDetails(userId) {
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+    userId,
+  ]);
+
+  return result.rows[0] ?? null;
+}
+
+async function getUserDetailsFromUsername(username) {
   const result = await pool.query("SELECT * FROM users WHERE username = $1", [
     username,
   ]);
@@ -46,10 +54,16 @@ async function deleteUser(username) {
   return result.rowCount;
 }
 
+async function deleteAllUsers() {
+  pool.query("TRUNCATE TABLE users");
+}
+
 module.exports = {
+  deleteAllUsers,
   getAllUsers,
   createNewUser,
   getUserDetails,
   deleteUser,
+  getUserDetailsFromUsername,
   getUsernameFromEmail,
 };
