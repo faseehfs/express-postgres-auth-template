@@ -19,29 +19,20 @@
     </form>
 
     <script>
-      async function redirectIfAlreadyLoggedIn() {
-        const response = await fetch("/api/user/is-logged-in");
-        const data = await response.json();
-        if (data.isLoggedIn) {
-          alert("You are already logged in.");
-          window.location.href = "/home";
-        }
-      }
-
-      redirectIfAlreadyLoggedIn();
-
       const loginForm = document.getElementById("loginForm");
 
       loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const username = loginForm.username.value;
-        const password = loginForm.password.value;
+        const payload = {
+          username: loginForm.username.value,
+          password: loginForm.password.value,
+        };
 
         response = await fetch("/api/user/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify(payload),
         });
 
         console.log(await response.json());

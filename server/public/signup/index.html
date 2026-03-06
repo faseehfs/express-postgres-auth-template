@@ -32,12 +32,10 @@
       signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const formData = new FormData(signupForm);
-
         const payload = {
-          username: formData.get("username"),
-          email: formData.get("email"),
-          password: formData.get("password"),
+          username: signupForm.username.value,
+          email: signupForm.email.value,
+          password: signupForm.password.value,
         };
 
         const response = await fetch("/api/user/new", {
