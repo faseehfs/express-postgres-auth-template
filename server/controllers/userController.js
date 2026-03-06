@@ -13,7 +13,7 @@ async function createNewUser(req, res, next) {
     if (!username || !email || !password) {
       return res
         .status(400)
-        .json({ error: "Username, email, and password are required." });
+        .json({ error: "Username, email, and password are required" });
     }
 
     const password_hash = await bcrypt.hash(password, 10);

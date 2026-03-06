@@ -1,12 +1,8 @@
 const pool = require("../config/db");
 
 async function getAllUsers() {
-  try {
-    const result = await pool.query("SELECT username FROM users");
-    return result.rows;
-  } catch (err) {
-    throw err;
-  }
+  const result = await pool.query("SELECT username FROM users");
+  return result.rows;
 }
 
 async function createNewUser(username, email, password_hash) {
@@ -37,7 +33,7 @@ async function getUserByUsername(username) {
   return result.rows[0] ?? null;
 }
 
-async function getUsernameFromEmail(email) {
+async function getUsernameByEmail(email) {
   const result = await pool.query(
     "SELECT username FROM users WHERE email = $1",
     [email],
@@ -65,5 +61,5 @@ module.exports = {
   getUserById,
   deleteUser,
   getUserByUsername,
-  getUsernameFromEmail,
+  getUsernameByEmail,
 };
