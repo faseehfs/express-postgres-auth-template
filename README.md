@@ -1,8 +1,6 @@
 # Express
 
-This is a minimal Express application which demonstrates user authentication.
-
-> **Note:** Don't forget to run `npm run init-db` to initialize the database.
+Don't forget to run `npm run init-db` to initialize the database.
 
 ## Project Structure
 
