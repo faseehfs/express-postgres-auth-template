@@ -1,5 +1,7 @@
 # Project Structure Reference
 
+Note: This is only for reference, this template may not strictly use these templates.
+
 ## Option 1: layered architecture (small to medium apps)
 
 ```
