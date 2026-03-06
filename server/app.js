@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const path = require("path");
 const errorHandler = require("./middleware/errorHandler");
 const session = require("express-session");
 
@@ -11,7 +12,7 @@ app.use(express.json()); // Only applies to requests whose Content-Type is appli
 
 app.use(express.urlencoded());
 
-app.use(express.static("./public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   session({
