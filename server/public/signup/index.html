@@ -9,51 +9,26 @@
   <body>
     <h1>Signup</h1>
     <form id="signupForm">
-      <label for="username">Username</label><br />
-      <input
-        type="text"
-        id="username"
-        name="username"
-        autocomplete="name"
-      /><br />
-
-      <label for="email">Email</label><br />
-      <input type="email" id="email" name="email" autocomplete="email" /><br />
-
-      <label for="password">Password</label><br />
+      <label for="username">Username</label>
+      <input type="text" name="username" autocomplete="name" />
+      <label for="email">Email</label>
+      <input type="email" name="email" autocomplete="email" />
+      <label for="password">Password</label>
       <input
         type="password"
         id="password"
         name="password"
         autocomplete="new-password"
-      /><br />
-      <button id="signupFormSubmitButton" class="button" type="submit" disabled>
+      />
+      <button id="signupFormSubmitButton" class="button" type="submit">
         Submit
       </button>
-      <p id="errorP" class="danger-color">&nbsp;</p>
     </form>
 
     <script>
       const signupForm = document.getElementById("signupForm");
       const signupBtn = document.getElementById("signupFormSubmitButton");
-      const inputs = signupForm.querySelectorAll("input");
 
-      // Disable submit button if inputs are empty
-      inputs.forEach((input) => {
-        input.addEventListener("input", () => {
-          let allFilled = true;
-
-          inputs.forEach((input) => {
-            if (input.value.length < 3) {
-              allFilled = false;
-            }
-          });
-
-          signupBtn.disabled = !allFilled;
-        });
-      });
-
-      // Submit form
       signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -63,7 +38,6 @@
           username: formData.get("username"),
           email: formData.get("email"),
           password: formData.get("password"),
-          // The .get() method looks for the "name" attribute, not the "id".
         };
 
         const response = await fetch("/api/user/new", {
@@ -74,14 +48,7 @@
           body: JSON.stringify(payload),
         });
 
-        if (response.ok) {
-          window.location = "/home";
-        } else {
-          const data = await response.json();
-
-          const errorP = document.getElementById("errorP");
-          errorP.innerHTML = `Failed to create new account. Try using an alternate username or email.`;
-        }
+        console.log(await response.json());
       });
     </script>
   </body>
