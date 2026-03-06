@@ -1,8 +1,3 @@
-/*
-This is the entry point of our application.
-To host the website, run this file.
-*/
-
 require("dotenv").config();
 
 const express = require("express");
@@ -10,26 +5,15 @@ const path = require("path");
 const errorHandler = require("./middleware/errorHandler");
 const session = require("express-session");
 
-// You can import modules either by require (CommonJS) or import (ES6).
-// ES6 modules are the modern approach. However, here we use CommonJS.
-// CommonJS modules are loaded synchronusly, while ES6 modules are loaded
-// asynchronously.
-
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json()); // Only applies to requests whose Content-Type is application/json.
 
-// express.json() reads the req.body, parses it into an JavaScript object, and
-// sets req.body = that parsed object.
-// NOTE: It only parses requests with Content-Type: application/json.
+app.use(express.urlencoded());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// express.static(path) middleware serves static files in the path.
-// If a matching file is found, it ends the request-response cycle.
-
-app.use(express.urlencoded());
 app.use(
   session({
     resave: false,
