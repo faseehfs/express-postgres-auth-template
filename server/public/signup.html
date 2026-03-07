@@ -46,7 +46,10 @@
           body: JSON.stringify(payload),
         });
 
-        console.log(await response.json());
+        if (!response.ok) {
+          data = await response.json();
+          console.log(data.error);
+        }
       });
     </script>
   </body>
