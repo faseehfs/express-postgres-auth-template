@@ -5,10 +5,14 @@ async function getAllUsers() {
   return result.rows;
 }
 
-async function createNewUser(username, email, password_hash) {
+async function createNewUser(username, email, password_hash, role = "user") {
+  if (!["user", "admin"].includes(role)) {
+    throw new Error("Invalid role");
+  }
+
   const result = await pool.query(
-    "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
-    [username, email, password_hash],
+    "INSERT INTO users (username, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING *",
+    [username, email, password_hash, role],
   );
   // If the query cannot be executed successfully, pool.query(...) throws an
   // error (rejects the Promise) rather than returning a result.

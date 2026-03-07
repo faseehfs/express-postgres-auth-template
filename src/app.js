@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const errorHandler = require("./middleware/errorHandler");
 const session = require("express-session");
+const ensureFirstAdminExists = require("./utils/ensureFirstAdminExists");
 
 const app = express();
 const PORT = 3000;
@@ -21,6 +22,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
   }),
 );
+
+ensureFirstAdminExists();
 
 app.use("/api", require("./routes"));
 

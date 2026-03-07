@@ -19,6 +19,7 @@ async function createNewUser(req, res, next) {
     const password_hash = await bcrypt.hash(password, 10);
     const user = await userModel.createNewUser(username, email, password_hash);
     req.session.userId = user.id;
+    req.session.role = user.role;
     res.json({ message: "User created" });
   } catch (err) {
     if (err.code === "23505") {
@@ -53,6 +54,7 @@ async function login(req, res, next) {
   }
 
   req.session.userId = userDetails.id;
+  req.session.role = userDetails.role;
   res.json({ message: "Success" });
 }
 
