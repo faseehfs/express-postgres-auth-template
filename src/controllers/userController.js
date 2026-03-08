@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
+const userService = require("../services/userService");
 
 async function getAllUsers(req, res, next) {
   const users = await userModel.getAllUsers();
@@ -7,23 +8,22 @@ async function getAllUsers(req, res, next) {
 }
 
 async function createNewUser(req, res, next) {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ error: "Username, email, and password are required" });
+  }
+
   try {
-    const { username, email, password } = req.body;
+    const user = await userService.registerUser(username, email, password);
 
-    if (!username || !email || !password) {
-      return res
-        .status(400)
-        .json({ error: "Username, email, and password are required" });
-    }
-
-    const password_hash = await bcrypt.hash(password, 10);
-    const user = await userModel.createNewUser(username, email, password_hash);
     req.session.userId = user.id;
     req.session.role = user.role;
     res.json({ message: "User created" });
   } catch (err) {
     if (err.code === "23505") {
-      // PostgreSQL unique violation
       return res
         .status(409)
         .json({ error: "Username or email already exists" });
